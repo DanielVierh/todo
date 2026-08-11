@@ -1,0 +1,318 @@
+:root {
+    --color-bg-start: rgb(9, 25, 60);
+    --color-bg-end: rgb(7, 60, 63);
+    --color-white: white;
+    --color-accent: rgb(7, 145, 90);
+
+    --color-todo-bg: rgb(10, 11, 11);
+    --color-save-btn: lightgreen;
+
+    --color-prio-low: #2ecc71;
+    --color-prio-normal: #f1c40f;
+    --color-prio-high: #e74c3c;
+
+    --color-overdue: #ff6b6b;
+
+    --color-column-bg: rgba(0, 0, 0, 0.2);
+    --color-drag-over-bg: rgba(255, 255, 255, 0.15);
+    --color-drag-over-outline: rgba(255, 255, 255, 0.5);
+
+    --color-overlay: rgba(0, 0, 0, 0.55);
+    --color-modal-start: #12151d;
+    --color-modal-end: #0a7a80;
+    --color-modal-border: rgba(255, 255, 255, 0.35);
+    --color-modal-shadow: rgba(0, 0, 0, 0.5);
+    --color-dark-overlay: rgba(0, 0, 0, 0.25);
+    --color-input-border: rgba(255, 255, 255, 0.3);
+}
+
+body {
+    background: linear-gradient(
+        to bottom,
+        var(--color-bg-start),
+        var(--color-bg-end)
+    );
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    color: var(--color-white);
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 60px 30px;
+}
+
+.priority-board {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    max-width: 1600px;
+    align-items: flex-start;
+}
+
+.priority-column {
+    flex: 1;
+    background: var(--color-column-bg);
+    border-radius: 16px;
+    padding: 14px 12px 18px;
+    min-height: 200px;
+    min-width: 300px;
+    transition: background 0.2s;
+}
+
+.priority-column.drag-over {
+    background: var(--color-drag-over-bg);
+    outline: 2px dashed var(--color-drag-over-outline);
+}
+
+.column-title {
+    margin: 0 0 12px;
+    font-size: 0.9rem;
+    text-align: center;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.column-low {
+    color: var(--color-prio-low);
+}
+.column-normal {
+    color: var(--color-prio-normal);
+}
+.column-high {
+    color: var(--color-prio-high);
+}
+
+.todo-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 40px;
+}
+
+.todo-element {
+    color: var(--color-accent);
+    list-style: none;
+    background-color: var(--color-todo-bg);
+    padding: 5px 10px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px var(--color-white);
+    cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+    min-height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todo-element.dragging {
+    opacity: 0.4;
+    cursor: grabbing;
+}
+
+.todo-due {
+    font-size: 0.78rem;
+    opacity: 0.75;
+    white-space: nowrap;
+    margin-left: 12px;
+}
+
+.add-todo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.form-field {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.save-button {
+    display: inline-block;
+    background: var(--color-save-btn);
+    border-radius: 15px;
+    outline: none;
+    border: 3px solid var(--color-white);
+    padding: 8px 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--color-overlay);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-overlay[hidden] {
+    display: none;
+}
+
+.modal {
+    background: linear-gradient(
+        135deg,
+        var(--color-modal-start),
+        var(--color-modal-end)
+    );
+    border: 2px solid var(--color-modal-border);
+    border-radius: 18px;
+    padding: 32px 36px;
+    min-width: 320px;
+    max-width: 480px;
+    width: 90%;
+    color: var(--color-white);
+    position: relative;
+    box-shadow: 0 8px 40px var(--color-modal-shadow);
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: 1.6rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-label {
+    display: block;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 14px 0 4px;
+}
+
+.modal-input {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--color-dark-overlay);
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    color: var(--color-white);
+    padding: 8px 10px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.modal-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+}
+
+.modal-input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.modal-done-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 14px 0 0;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.modal-countdown {
+    background: var(--color-dark-overlay);
+    border-radius: 12px;
+    padding: 14px 18px;
+    text-align: center;
+    font-size: 1.05rem;
+    letter-spacing: 0.03em;
+}
+
+.countdown-units {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 8px;
+}
+
+.countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 52px;
+}
+
+.countdown-unit span:first-child {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--color-accent);
+}
+
+.countdown-unit span:last-child {
+    font-size: 0.68rem;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.countdown-overdue {
+    color: var(--color-overdue);
+    font-weight: bold;
+}
+
+.countdown-ref {
+    margin-top: 10px;
+    font-size: 0.78rem;
+    opacity: 0.6;
+    text-align: center;
+}
+
+.todo-done {
+    text-decoration: line-through;
+    opacity: 0.55;
+}
+
+.todo-overdue {
+    background-color: var(--color-overdue);
+    color: var(--color-white);
+    box-shadow: 0 0 12px var(--color-overdue);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.modal-btn {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-done {
+    background: var(--color-prio-low);
+    color: var(--color-white);
+}
+
+.btn-delete {
+    background: var(--color-prio-high);
+    color: var(--color-white);
+}

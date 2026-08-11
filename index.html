@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="src/css/style.css" />
+        <title>Todo</title>
+    </head>
+    <body>
+        <h1>ToDO</h1>
+
+        <section>
+            <h3>Deine Todos:</h3>
+            <div class="add-todo">
+                <h5>Todo hinzufügen:</h5>
+                <div class="form-field">
+                    <input
+                        id="inp_todo"
+                        type="text"
+                        placeholder="Todo eingeben"
+                        required
+                    />
+                    <input
+                        id="inp_description"
+                        type="text"
+                        placeholder="Beschreibung eingeben"
+                    />
+                    <input id="inp_due_date" type="datetime-local" />
+                </div>
+                <button id="save_todo" class="save-button">Save</button>
+            </div>
+            <div class="priority-board">
+                <div class="priority-column" data-priority="low">
+                    <h4 class="column-title column-low">&#9899; Low</h4>
+                    <ul class="todo-list" id="list_low"></ul>
+                </div>
+                <div class="priority-column" data-priority="normal">
+                    <h4 class="column-title column-normal">&#9898; Normal</h4>
+                    <ul class="todo-list" id="list_normal"></ul>
+                </div>
+                <div class="priority-column" data-priority="high">
+                    <h4 class="column-title column-high">&#128308; High</h4>
+                    <ul class="todo-list" id="list_high"></ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Todo-Detail-Modal -->
+        <div id="todo_modal" class="modal-overlay" hidden>
+            <div class="modal">
+                <button id="modal_close" class="modal-close">&times;</button>
+                <h2 id="modal_name"></h2>
+                <label class="modal-label">Beschreibung</label>
+                <textarea
+                    id="modal_description"
+                    class="modal-input"
+                    rows="10"
+                ></textarea>
+                <label class="modal-label">F&auml;llig am</label>
+                <input
+                    id="modal_due_date"
+                    type="datetime-local"
+                    class="modal-input"
+                />
+                <label class="modal-done-label">
+                    <input type="checkbox" id="modal_done_check" />
+                    Erledigt
+                </label>
+                <div id="modal_countdown" class="modal-countdown"></div>
+                <div class="modal-actions">
+                    <button id="modal_save" class="modal-btn btn-done">
+                        &#10003; Speichern
+                    </button>
+                    <button id="modal_delete" class="modal-btn btn-delete">
+                        &#128465; L&ouml;schen
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script src="src/js/script.js"></script>
+    </body>
+</html>
