@@ -10,25 +10,43 @@
     <h1>ToDO</h1>
 
     <section>
-      <h3>Deine Todos:</h3>
-      <div class="add-todo">
-        <h5>Todo hinzufügen:</h5>
-        <div class="form-field">
-          <input
-            id="inp_todo"
-            type="text"
-            placeholder="Todo eingeben"
-            required
-          />
-          <input
-            id="inp_description"
-            type="text"
-            placeholder="Beschreibung eingeben"
-          />
-          <input id="inp_due_date" type="datetime-local" />
+      <div class="inner-flex">
+        <h3>Deine Todos:</h3>
+        <div id="btn_open_mdl_new_todo" class="button">
+          Neues Todo hinzufügen
         </div>
-        <button id="save_todo" class="save-button">Save</button>
       </div>
+
+      <div id="new_modal" class="modal-overlay" hidden>
+        <div class="modal">
+          <div class="add-todo">
+            <button id="modal_new_close" class="modal-close">&times;</button>
+            <h5>Todo hinzufügen:</h5>
+            <div class="form-field">
+              <input
+                id="inp_todo"
+                type="text"
+                placeholder="Todo eingeben"
+                required
+                class="modal-input"
+              />
+              <textarea
+                id="inp_description"
+                type="text"
+                placeholder="Beschreibung eingeben"
+                class="modal-input"
+              ></textarea>
+              <input
+                class="modal-input"
+                id="inp_due_date"
+                type="datetime-local"
+              />
+            </div>
+            <button id="save_todo" class="button save-button">Save</button>
+          </div>
+        </div>
+      </div>
+
       <div class="priority-board">
         <div class="priority-column" data-priority="low">
           <h4 class="column-title column-low">&#9899; Low</h4>

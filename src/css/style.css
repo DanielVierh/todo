@@ -44,6 +44,14 @@ body {
   font-size: 16px;
 }
 
+.inner-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 30px 0;
+}
+
 .priority-board {
   display: flex;
   flex-wrap: wrap;
@@ -138,15 +146,20 @@ body {
   gap: 10px;
 }
 
-.save-button {
+.button {
   display: inline-block;
-  background: var(--color-save-btn);
+  background: var(--color-overlay);
   border-radius: 15px;
   outline: none;
   border: 3px solid var(--color-white);
   padding: 8px 15px;
   font-weight: bold;
   cursor: pointer;
+  margin: 0 20px;
+}
+
+.save-button {
+  background: var(--color-save-btn);
 }
 
 /* Modal */
