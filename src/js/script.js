@@ -177,10 +177,13 @@ modal_save.addEventListener("click", () => {
 });
 
 modal_delete.addEventListener("click", () => {
-  todos = todos.filter((t) => t.id !== activeTodoId);
-  save_into_storage();
-  render_todos();
-  close_modal();
+  const confirm = window.confirm("Soll das Todo wirklich gelöscht werden?");
+  if (confirm) {
+    todos = todos.filter((t) => t.id !== activeTodoId);
+    save_into_storage();
+    render_todos();
+    close_modal();
+  }
 });
 
 function open_modal(todo = null) {

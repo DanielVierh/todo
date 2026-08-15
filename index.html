@@ -76,9 +76,12 @@
         ></textarea>
         <label class="modal-label">Fällig am</label>
         <input id="modal_due_date" type="datetime-local" class="modal-input" />
-        <label class="modal-done-label">
+        <label class="modal-toggle modal-done-label" for="modal_done_check">
           <input type="checkbox" id="modal_done_check" />
-          Erledigt
+          <span class="modal-toggle-track" aria-hidden="true">
+            <span class="modal-toggle-thumb"></span>
+          </span>
+          <span class="modal-toggle-text">Erledigt</span>
         </label>
         <div id="modal_countdown" class="modal-countdown"></div>
         <div class="modal-actions">
