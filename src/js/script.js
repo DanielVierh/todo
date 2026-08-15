@@ -10,6 +10,7 @@ const modal_delete = document.getElementById("modal_delete");
 const modal_done_check = document.getElementById("modal_done_check");
 let todos = [];
 let countdownInterval = null;
+let statusInterval = null;
 let activeTodoId = null;
 let draggingId = null;
 
@@ -80,15 +81,6 @@ function render_todos() {
       : "";
     todo_element.innerHTML = `<span class="todo-name">${t.name}</span>${due ? `<span class="todo-due">${due}</span>` : ""}`;
     todo_element.classList.add("todo-element");
-    if (t.done) todo_element.classList.add("todo-done");
-    if (
-      !t.done &&
-      t.due_date &&
-      new Date(
-        t.due_date.includes("T") ? t.due_date : t.due_date + "T23:59:59",
-      ) < new Date()
-    )
-      todo_element.classList.add("todo-overdue");
     todo_element.dataset.id = t.id;
     todo_element.draggable = true;
 
@@ -104,6 +96,8 @@ function render_todos() {
     const col = lists[t.priority] || lists.normal;
     col.appendChild(todo_element);
   }
+
+  update_todo_statuses();
 
   // Drag-over / drop auf jeder Spalte
   for (const [prio, list] of Object.entries(lists)) {
@@ -140,6 +134,48 @@ function load_from_storage() {
     }
   } catch (error) {
     console.log(error);
+  }
+}
+
+function get_due_time(todo) {
+  if (!todo.due_date) return null;
+  return new Date(
+    todo.due_date.includes("T") ? todo.due_date : todo.due_date + "T23:59:59",
+  ).getTime();
+}
+
+function update_todo_statuses() {
+  const now = Date.now();
+
+  for (const todo of todos) {
+    const todoElement = document.querySelector(
+      `.todo-element[data-id="${todo.id}"]`,
+    );
+    if (!todoElement) continue;
+
+    todoElement.classList.remove(
+      "todo-done",
+      "todo-soon",
+      "todo-urgent",
+      "todo-overdue",
+    );
+
+    if (todo.done) {
+      todoElement.classList.add("todo-done");
+      continue;
+    }
+
+    const dueTime = get_due_time(todo);
+    if (dueTime == null) continue;
+
+    const diff = dueTime - now;
+    if (diff <= 0) {
+      todoElement.classList.add("todo-overdue");
+    } else if (diff <= 5 * 60 * 60 * 1000) {
+      todoElement.classList.add("todo-urgent");
+    } else if (diff <= 24 * 60 * 60 * 1000) {
+      todoElement.classList.add("todo-soon");
+    }
   }
 }
 
@@ -269,4 +305,6 @@ function render_countdown(el, due_date) {
 // Init
 window.onload = () => {
   load_from_storage();
+  update_todo_statuses();
+  statusInterval = setInterval(update_todo_statuses, 1000);
 };

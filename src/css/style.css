@@ -359,6 +359,18 @@ body {
   box-shadow: 0 0 12px var(--color-overdue);
 }
 
+.todo-soon {
+  background-color: #f1c40f;
+  color: #1b1b1b;
+  box-shadow: 0 0 12px rgba(241, 196, 15, 0.85);
+}
+
+.todo-urgent {
+  background-color: #f39c12;
+  color: #1b1b1b;
+  box-shadow: 0 0 12px rgba(243, 156, 18, 0.9);
+}
+
 .modal-actions {
   display: flex;
   gap: 12px;
