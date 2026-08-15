@@ -4,6 +4,7 @@ const new_modal = document.getElementById("new_modal");
 const btn_open_mdl_new_todo = document.getElementById("btn_open_mdl_new_todo");
 const todo_modal = document.getElementById("todo_modal");
 const modal_close = document.getElementById("modal_close");
+const modal_new_close = document.getElementById("modal_new_close");
 const modal_save = document.getElementById("modal_save");
 const modal_delete = document.getElementById("modal_delete");
 const modal_done_check = document.getElementById("modal_done_check");
@@ -153,6 +154,7 @@ document.addEventListener("click", (e) => {
 
 // Modal schließen
 modal_close.addEventListener("click", close_modal);
+modal_new_close.addEventListener("click", close_modal);
 todo_modal.addEventListener("click", (e) => {
   if (e.target === todo_modal) close_modal();
 });
